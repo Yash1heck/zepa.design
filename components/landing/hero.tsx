@@ -112,11 +112,12 @@ export function Hero() {
             </Link>
           </Button>
           <Button
+            asChild
             variant="outline"
             size="lg"
             className="rounded-full px-8 h-12 text-base font-medium border-zinc-800 text-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-700 bg-transparent"
           >
-            View Demo
+            <Link href="#demo">View Demo</Link>
           </Button>
         </motion.div>
 

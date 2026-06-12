@@ -1,10 +1,8 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -14,73 +12,82 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-const GITHUB_REPO = "magicuidesign/magicui"
+const GITHUB_REPO = "zepa-ui/zepa.design"
 const GITHUB_URL = `https://github.com/${GITHUB_REPO}`
 
-const formatCompactCount = (value: number) => {
-  if (value >= 1000) {
-    return `${(value / 1000).toFixed(1)}k`
-  }
-
-  return value.toLocaleString()
-}
-
-async function getStarsCount() {
-  try {
-    const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}`)
-    if (!response.ok) return 0
-
-    const json: unknown = await response.json()
-    if (
-      typeof json !== "object" ||
-      json === null ||
-      !("stargazers_count" in json) ||
-      typeof json.stargazers_count !== "number"
-    ) {
-      return 0
-    }
-
-    return Number.isFinite(json.stargazers_count) ? json.stargazers_count : 0
-  } catch {
-    return 0
-  }
-}
+/*
+ * Stars count — re-enable later
+ *
+ * import { useEffect, useMemo, useState } from "react"
+ * import { Skeleton } from "@/components/ui/skeleton"
+ *
+ * const formatCompactCount = (value: number) => {
+ *   if (value >= 1000) {
+ *     return `${(value / 1000).toFixed(1)}k`
+ *   }
+ *   return value.toLocaleString()
+ * }
+ *
+ * async function getStarsCount() {
+ *   try {
+ *     const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}`)
+ *     if (!response.ok) return 0
+ *     const json: unknown = await response.json()
+ *     if (
+ *       typeof json !== "object" ||
+ *       json === null ||
+ *       !("stargazers_count" in json) ||
+ *       typeof json.stargazers_count !== "number"
+ *     ) {
+ *       return 0
+ *     }
+ *     return Number.isFinite(json.stargazers_count) ? json.stargazers_count : 0
+ *   } catch {
+ *     return 0
+ *   }
+ * }
+ *
+ * const [stars, setStars] = useState<number | null>(null)
+ *
+ * useEffect(() => {
+ *   let mounted = true
+ *   getStarsCount().then((count) => {
+ *     if (mounted) setStars(count)
+ *   })
+ *   return () => {
+ *     mounted = false
+ *   }
+ * }, [])
+ *
+ * const starsLabel = useMemo(() => {
+ *   if (stars === null) return null
+ *   return {
+ *     full: stars.toLocaleString(),
+ *     compact: formatCompactCount(stars),
+ *   }
+ * }, [stars])
+ *
+ * {starsLabel ? (
+ *   <span className="text-muted-foreground w-8 text-xs tabular-nums">
+ *     <span className="hidden sm:inline">{starsLabel.full}</span>
+ *     <span className="sm:hidden">{starsLabel.compact}</span>
+ *   </span>
+ * ) : (
+ *   <Skeleton className="h-4 w-8" />
+ * )}
+ */
 
 export function GitHubLink({ className }: { className?: string }) {
-  const [stars, setStars] = useState<number | null>(null)
-
-  useEffect(() => {
-    let mounted = true
-
-    getStarsCount().then((count) => {
-      if (mounted) setStars(count)
-    })
-
-    return () => {
-      mounted = false
-    }
-  }, [])
-
-  const starsLabel = useMemo(() => {
-    if (stars === null) return null
-    return {
-      full: stars.toLocaleString(),
-      compact: formatCompactCount(stars),
-    }
-  }, [stars])
-
   return (
-    <Button asChild size="sm" variant="ghost" className="h-8 gap-2 shadow-none">
-      <Link href={GITHUB_URL} target="_blank" rel="noreferrer" className={className} title="View on GitHub">
-        <GitHubIcon className="size-4" />
-        {starsLabel ? (
-          <span className="text-muted-foreground w-8 text-xs tabular-nums">
-            <span className="hidden sm:inline">{starsLabel.full}</span>
-            <span className="sm:hidden">{starsLabel.compact}</span>
-          </span>
-        ) : (
-          <Skeleton className="h-4 w-8" />
-        )}
+    <Button asChild size="sm" variant="ghost" className="h-8 shadow-none">
+      <Link
+        href={GITHUB_URL}
+        target="_blank"
+        rel="noreferrer"
+        className={className}
+        title="View on GitHub"
+      >
+        <GitHubIcon className="size-5 shrink-0" />
       </Link>
     </Button>
   )

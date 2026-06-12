@@ -61,6 +61,16 @@ const testimonials = [
     image:
       "https://res.cloudinary.com/dy4bqxt8p/image/upload/v1781176729/core_dgrrad.png",
   },
+  {
+    name: "Avinash T",
+    profession: "Software Developer",
+    description:
+      "Clean React components with thoughtful motion. Easy to customize and impossible to tell they started as copy-paste.",
+    avatar:
+      "https://res.cloudinary.com/dy4bqxt8p/image/upload/v1781257566/Screenshot_2026-06-12_at_3.11.14_PM_ntchub.png",
+    image:
+      "https://res.cloudinary.com/dy4bqxt8p/image/upload/v1781257542/compass_ynxqk9.png",
+  },
 ]
 
 const duplicatedTestimonials = [...testimonials, ...testimonials]

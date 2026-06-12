@@ -53,7 +53,7 @@ export default function DemoSection() {
   }, [paused])
 
   return (
-    <section className="mx-auto w-full max-w-[1400px] bg-landing px-4 py-16 md:px-6 md:py-20">
+    <section id="demo" className="mx-auto w-full max-w-[1400px] bg-landing px-4 py-16 md:px-6 md:py-20">
       <div className="relative z-10 mb-10 text-center md:mb-12">
         <h2
           className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-normal tracking-tight text-zinc-100"

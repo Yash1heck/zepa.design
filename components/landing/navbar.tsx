@@ -4,14 +4,13 @@ import { useState, useRef } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { GitHubLink } from "@/components/landing/github-link"
 
 const navItems = [
   { label: "Features", href: "#features" },
   { label: "Components", href: "/components" },
+  { label: "Templates", href: "https://github.com/zepa-ui/zepa.design" },
   { label: "Docs", href: "/docs" },
-  { label: "Blog", href: "#blog" },
 ]
 
 export function Navbar() {
@@ -46,6 +45,9 @@ export function Navbar() {
               key={item.label}
               href={item.href}
               className="relative px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+              {...(item.href.startsWith("http")
+                ? { target: "_blank", rel: "noreferrer" }
+                : {})}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
@@ -64,9 +66,6 @@ export function Navbar() {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white hover:bg-zinc-800">
-            Sign In
-          </Button>
           <GitHubLink className="text-zinc-300 hover:text-white" />
         </div>
 
@@ -94,15 +93,15 @@ export function Navbar() {
                 key={item.label}
                 href={item.href}
                 className="px-4 py-3 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
+                {...(item.href.startsWith("http")
+                  ? { target: "_blank", rel: "noreferrer" }
+                  : {})}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
               </a>
             ))}
             <hr className="border-zinc-800 my-2" />
-            <Button variant="ghost" className="justify-start text-zinc-400 hover:text-white">
-              Sign In
-            </Button>
             <div className="px-1 pt-1">
               <GitHubLink className="text-zinc-300 hover:text-white" />
             </div>
