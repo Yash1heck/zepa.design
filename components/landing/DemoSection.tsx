@@ -1,38 +1,42 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import dynamic from "next/dynamic"
+import { useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, useInView } from "framer-motion"
 import Image from "next/image"
+import type { ComponentType } from "react"
 
-import MainframeHero from "@/content/registry/hero-sections/mainframe-hero/demo"
-import VercelHero from "@/content/registry/hero-sections/vercel-hero/demo"
-import PosterScrollHero from "@/content/registry/hero-sections/posterscroll-hero/demo"
-import DataAnalyticsHero from "@/content/registry/hero-sections/dataanalytics-hero/demo"
+const MainframeHero = dynamic(
+  () => import("@/content/registry/hero-sections/mainframe-hero/demo"),
+  { ssr: false }
+)
+const VercelHero = dynamic(
+  () => import("@/content/registry/hero-sections/vercel-hero/demo"),
+  { ssr: false }
+)
+const PosterScrollHero = dynamic(
+  () => import("@/content/registry/hero-sections/posterscroll-hero/demo"),
+  { ssr: false }
+)
+const DataAnalyticsHero = dynamic(
+  () => import("@/content/registry/hero-sections/dataanalytics-hero/demo"),
+  { ssr: false }
+)
 
-const tabs = [
-  {
-    id: "mainframe",
-    label: "Mainframe",
-    component: MainframeHero,
-  },
-  {
-    id: "vercel",
-    label: "Vercel",
-    component: VercelHero,
-  },
-  {
-    id: "peacock",
-    label: "Peacock",
-    component: PosterScrollHero,
-  },
-  {
-    id: "analytics",
-    label: "Analytics",
-    component: DataAnalyticsHero,
-  },
+const tabs: {
+  id: string
+  label: string
+  component: ComponentType
+}[] = [
+  { id: "mainframe", label: "Mainframe", component: MainframeHero },
+  { id: "vercel", label: "Vercel", component: VercelHero },
+  { id: "peacock", label: "Peacock", component: PosterScrollHero },
+  { id: "analytics", label: "Analytics", component: DataAnalyticsHero },
 ]
 
 export default function DemoSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const isInView = useInView(sectionRef, { margin: "200px 0px", amount: 0.1 })
   const [activeTab, setActiveTab] = useState("mainframe")
   const [paused, setPaused] = useState(false)
 
@@ -40,9 +44,9 @@ export default function DemoSection() {
     tabs.find((tab) => tab.id === activeTab)?.component ?? MainframeHero
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (paused) return
+    if (!isInView || paused) return
 
+    const interval = setInterval(() => {
       setActiveTab((current) => {
         const currentIndex = tabs.findIndex((tab) => tab.id === current)
         return tabs[(currentIndex + 1) % tabs.length].id
@@ -50,10 +54,23 @@ export default function DemoSection() {
     }, 6000)
 
     return () => clearInterval(interval)
-  }, [paused])
+  }, [paused, isInView])
+
+  useEffect(() => {
+    if (!isInView) return
+
+    void import("@/content/registry/hero-sections/mainframe-hero/demo")
+    void import("@/content/registry/hero-sections/vercel-hero/demo")
+    void import("@/content/registry/hero-sections/posterscroll-hero/demo")
+    void import("@/content/registry/hero-sections/dataanalytics-hero/demo")
+  }, [isInView])
 
   return (
-    <section id="demo" className="mx-auto w-full max-w-[1400px] bg-landing px-4 py-16 md:px-6 md:py-20">
+    <section
+      ref={sectionRef}
+      id="demo"
+      className="mx-auto w-full max-w-[1400px] bg-landing px-4 py-16 md:px-6 md:py-20"
+    >
       <div className="relative z-10 mb-10 text-center md:mb-12">
         <h2
           className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-normal tracking-tight text-zinc-100"
@@ -107,34 +124,36 @@ export default function DemoSection() {
         </div>
 
         {/* Demo Area */}
-        <div className="relative h-[640px] overflow-hidden sm:h-[720px] lg:h-[800px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{
-                opacity: 0,
-                filter: "blur(20px)",
-                scale: 0.98,
-              }}
-              animate={{
-                opacity: 1,
-                filter: "blur(0px)",
-                scale: 1,
-              }}
-              exit={{
-                opacity: 0,
-                filter: "blur(20px)",
-                scale: 0.98,
-              }}
-              transition={{
-                duration: 0.45,
-                ease: "easeInOut",
-              }}
-              className="h-full w-full"
-            >
-              <ActiveComponent />
-            </motion.div>
-          </AnimatePresence>
+        <div className="relative isolate h-[640px] overflow-hidden [transform:translateZ(0)] sm:h-[720px] lg:h-[800px]">
+          {isInView ? (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{
+                  opacity: 0,
+                  filter: "blur(20px)",
+                  scale: 0.98,
+                }}
+                animate={{
+                  opacity: 1,
+                  filter: "blur(0px)",
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  filter: "blur(20px)",
+                  scale: 0.98,
+                }}
+                transition={{
+                  duration: 0.45,
+                  ease: "easeInOut",
+                }}
+                className="demo-embed-root relative h-full w-full overflow-hidden"
+              >
+                <ActiveComponent />
+              </motion.div>
+            </AnimatePresence>
+          ) : null}
         </div>
       </div>
     </section>

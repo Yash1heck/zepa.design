@@ -32,7 +32,11 @@ We will acknowledge receipt and work on a fix. Please allow reasonable time befo
 - Do not add third-party scripts without review
 - Prefer dependencies with active maintenance
 - Run `npm run lint` and `npm run test` before submitting PRs
-- Avoid `dangerouslySetInnerHTML` unless strictly necessary and sanitized
+- Avoid `dangerouslySetInnerHTML`, `eval`, `new Function`, and `document.write` entirely in registry components
+- No network calls (`fetch`, `XMLHttpRequest`, `axios`, `WebSocket`, `sendBeacon`) inside `content/registry` — demos must be self-contained and side-effect free
+- Don't commit image assets to `content/registry/**/ui/assets/` — host images externally (Cloudinary) and reference by URL; use `https://res.cloudinary.com/dcsgson45/image/upload/v1781431470/defaultzepa_vqbtvz.png` as a placeholder if no image is available yet
+
+These rules are enforced automatically in CI for every PR.
 
 ## Supported versions
 

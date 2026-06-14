@@ -301,7 +301,7 @@ function VaultHero() {
               transition={{ duration: 0.3 }}
               onClick={() => setMenuOpen(false)}
               style={{
-                position: "fixed",
+                position: "absolute",
                 inset: 0,
                 background: "rgba(25,40,55,0.35)",
                 backdropFilter: "blur(4px)",
@@ -317,11 +317,11 @@ function VaultHero() {
               exit={{ x: "100%" }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                position: "fixed",
+                position: "absolute",
                 right: 0,
                 top: 0,
                 width: "min(88vw, 360px)",
-                height: "100dvh",
+                height: "100%",
                 background: "#CFC8C5",
                 boxShadow: "-12px 0 48px rgba(25,40,55,0.18)",
                 zIndex: 51,

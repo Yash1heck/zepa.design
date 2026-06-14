@@ -1,13 +1,21 @@
-import { FullscreenDemo } from "@/components/showcase/fullscreen-demo"
-import { getMetaStats } from "@/lib/stats/meta-seeds"
+import { PlaygroundDemo } from "@/components/showcase/playground-demo"
 
-export default function HeroPlaygroundPage() {
+/** Change this slug or use `?slug=your-hero` in the URL to test another component. */
+const DEFAULT_PLAYGROUND_SLUG = "amero-hero"
+
+interface HeroPlaygroundPageProps {
+  searchParams: Promise<{ slug?: string }>
+}
+
+export default async function HeroPlaygroundPage({
+  searchParams,
+}: HeroPlaygroundPageProps) {
+  const { slug } = await searchParams
+  const demoSlug = slug ?? DEFAULT_PLAYGROUND_SLUG
+
   return (
     <main className="min-h-screen bg-black">
-      <FullscreenDemo
-        slug="posterscroll-hero"
-        initialStats={getMetaStats("posterscroll-hero")}
-      />
+      <PlaygroundDemo slug={demoSlug} />
     </main>
   )
 }

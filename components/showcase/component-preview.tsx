@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRef } from "react"
 
 interface ComponentPreviewProps {
   slug: string
@@ -13,18 +14,36 @@ export function ComponentPreview({
   title,
   preview,
 }: ComponentPreviewProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const handleMouseEnter = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.play().catch(() => {})
+  }
+
+  const handleMouseLeave = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.pause()
+    video.currentTime = 0
+  }
+
   return (
     <Link
       href={`/components/${slug}`}
       className="group relative block w-full overflow-hidden rounded-2xl border border-white/10"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="aspect-video overflow-hidden bg-black">
         <video
+          ref={videoRef}
           src={preview}
-          autoPlay
           muted
           loop
           playsInline
+          preload="metadata"
           className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
         />
       </div>

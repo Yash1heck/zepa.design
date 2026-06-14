@@ -34,12 +34,12 @@ export function Hero() {
         <div className="absolute inset-0 bg-landing" />
         <div className="absolute inset-0 opacity-85 flex items-center justify-center">
           <UnicornScene
-            projectId="tcG1K2JXES5pV3PGub42"
+            projectId="JzRF54wZO8Z2TMKMPPmT"
             width="1440px"
             height="1080px"
             scale={1}
             dpi={1.5}
-            sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.12/dist/unicornStudio.umd.js"
+            sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.5/dist/unicornStudio.umd.js"
           />
         </div>
 

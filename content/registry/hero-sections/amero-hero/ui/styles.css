@@ -1,0 +1,30 @@
+@keyframes amero-caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.amero-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eef1f7;
+}
+
+.amero-caret {
+  display: inline-block;
+  width: 2px;
+  height: 18px;
+  background: #0d1b4b;
+  margin-left: 2px;
+  animation: amero-caret-blink 1s steps(1) infinite;
+}

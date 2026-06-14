@@ -60,6 +60,30 @@ export function SidebarPanel({
           )
         })}
       </div>
+
+      <div className="mt-auto flex items-start gap-2 rounded-lg bg-white/5 px-3 py-2.5 pb-4 text-sm text-white/40">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="mt-0.5 shrink-0"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="10 8 16 12 10 16 10 8" />
+        </svg>
+        <span>
+          Hover on a card to preview
+          <br />
+          the video of the component
+        </span>
+      </div>
     </>
   )
 }

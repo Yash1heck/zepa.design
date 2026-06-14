@@ -8,7 +8,7 @@ Before opening a PR, make sure your component:
 
 - Has `meta.ts`
 - Has `demo.tsx`
-- Has `preview.mov` in `public/previews/`
+- Has `preview.mov` in `public/previews/`, compressed to under 5MB (e.g. `ffmpeg -i preview.mov -vf scale=1280:-2 -r 30 -c:v libx264 -crf 23 -preset fast -movflags +faststart -an preview.mov`)
 - Passes `npm run build:registry`
 - Passes `npm run lint`
 - Passes `npm run test`
@@ -16,6 +16,27 @@ Before opening a PR, make sure your component:
 - Has no hardcoded secrets or API keys
 - Is responsive (mobile + desktop)
 - Uses no hardcoded colors/assets that break theming (prefer design tokens / Tailwind utilities)
+- Has no `fetch`, `XMLHttpRequest`, `axios`, `WebSocket`, or other network calls
+- Has no `dangerouslySetInnerHTML`, `eval`, `new Function`, `document.write`, or inline `<script>` tags
+- Uses hosted image URLs only — no local files in `ui/assets/` (see Images below)
+
+## Images
+
+Do not commit image files (svg, png, jpg, etc.) into `content/registry/{category}/{slug}/ui/assets/`. CI rejects any `ui/assets` folder.
+
+Instead, host images externally (Cloudinary or similar) and reference them by URL in `demo.tsx`:
+
+```tsx
+const tile1 = "https://res.cloudinary.com/.../tile-1.svg";
+```
+
+If you don't have a hosted image yet, use the project default placeholder:
+
+```text
+https://res.cloudinary.com/dcsgson45/image/upload/v1781431470/defaultzepa_vqbtvz.png
+```
+
+If your image domain isn't `res.cloudinary.com` or `assets.basehub.com`, add it to `images.remotePatterns` in `next.config.ts` as part of your PR.
 
 ## Folder structure
 
@@ -119,6 +140,7 @@ PRs may be rejected if:
 - Many unnecessary dependencies
 - Copied code without adaptation
 - Wrong folder structure or missing required files
+- Contains network calls, unsafe scripts, or committed local image assets (`ui/assets/`) — these fail CI automatically
 
 ## Local checks
 

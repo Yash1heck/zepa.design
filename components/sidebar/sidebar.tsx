@@ -14,7 +14,7 @@ export function Sidebar({
   onSelect,
 }: SidebarProps) {
   return (
-    <aside className="w-sidebar hidden shrink-0 border-r border-white/10 bg-zinc-900/40 p-4 lg:block">
+    <aside className="w-sidebar hidden shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 p-4 lg:flex lg:h-screen lg:sticky lg:top-0">
       <SidebarPanel
         categories={categories}
         activeCategory={activeCategory}

@@ -127,7 +127,7 @@ const CALDERA_VIDEO_CLIP_DESKTOP =
 
 /** Tablet / narrow — smaller video rects, more gray for copy + CTA */
 const CALDERA_VIDEO_CLIP_TABLET =
-  "M 0.75 0 H 0.93 A 0.02 0.044 0 0 1 0.95 0.028 V 0.618 A 0.02 0.052 0 0 1 0.93 0.66 H 0.682 A 0.02 0.02 0 0 0 0.66 0.68 V 0.858 A 0.024 0.052 0 0 1 0.636 0.92 H 0.026 A 0.024 0.052 0 0 1 0 0.858 V 0.424 A 0.024 0.052 0 0 1 0.026 0.48 H 0.416 A 0.02 0.02 0 0 0 0.55 0.40 V 0.054 A 0.02 0.044 0 0 1 0.50 0 Z";
+  "M 0.75 0 H 0.85 A 0.02 0.044 0 0 1 0.87 0.028 V 0.618 A 0.02 0.052 0 0 1 0.85 0.66 H 0.682 A 0.02 0.02 0 0 0 0.66 0.68 V 0.858 A 0.024 0.052 0 0 1 0.636 0.92 H 0.026 A 0.024 0.052 0 0 1 0 0.858 V 0.46 A 0.024 0.052 0 0 1 0.026 0.52 H 0.416 A 0.02 0.02 0 0 0 0.55 0.44 V 0.054 A 0.02 0.044 0 0 1 0.50 0 Z";
 
 const CalderaHero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -226,7 +226,7 @@ const CalderaHero = () => {
         </svg>
 
         <div
-          className="absolute top-0 right-4 bottom-10 left-4 z-[1] md:right-6 md:bottom-12 md:left-6 lg:right-8 lg:bottom-[60px] lg:left-8"
+          className="absolute top-0 right-4 bottom-10 left-4 z-[1] hidden md:right-6 md:bottom-12 md:left-6 md:block lg:right-8 lg:bottom-[60px] lg:left-8"
           style={{ clipPath: `url(#${clipId})` }}
         >
             <video

@@ -32,25 +32,27 @@ export function LogoMarquee() {
         </p>
       </motion.div>
 
-      <div className="relative">
-        <div className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-32 bg-gradient-to-r from-landing to-transparent" />
-        <div className="pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-32 bg-gradient-to-l from-landing to-transparent" />
+      <div className="mx-auto max-w-3xl overflow-hidden px-4 md:max-w-4xl">
+        <div className="relative">
+          <div className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-20 bg-gradient-to-r from-landing to-transparent" />
+          <div className="pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-20 bg-gradient-to-l from-landing to-transparent" />
 
-        <div className="flex animate-marquee">
-          {[...logos, ...logos].map((logo, index) => (
-            <div
-              key={`${logo.src}-${index}`}
-              className="mx-5 flex h-20 min-w-[150px] items-center justify-center"
-            >
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={160}
-                height={56}
-                className="h-11 w-auto max-w-[160px] flex-none object-contain px-2 brightness-0 invert opacity-50 transition-opacity duration-300 hover:opacity-100"
-              />
-            </div>
-          ))}
+          <div className="flex animate-marquee">
+            {[...logos, ...logos].map((logo, index) => (
+              <div
+                key={`${logo.src}-${index}`}
+                className="mx-5 flex h-20 min-w-[150px] items-center justify-center"
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={160}
+                  height={56}
+                  className="h-11 w-auto max-w-[160px] flex-none object-contain px-2 brightness-0 invert opacity-50 transition-opacity duration-300 hover:opacity-100"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

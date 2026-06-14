@@ -1,77 +1,59 @@
 "use client"
 
-import { useState } from "react"
-
-import type { ComponentStats } from "@/lib/stats/types"
 import { cn } from "@/lib/utils"
 
-import { DemoStats } from "./demo-stats"
 import { DemoToolbar, type DemoTheme } from "./demo-toolbar"
 import { RegistryDemo } from "./registry-demo"
 
 interface ComponentDemoProps {
   slug: string
+  theme: DemoTheme
+  refreshKey?: number
   fullscreen?: boolean
-  showOpenInNewTab?: boolean
-  stats: ComponentStats
-  onLike: () => void
-  liking?: boolean
-  liked?: boolean
+  onThemeChange?: (theme: DemoTheme) => void
 }
 
 export function ComponentDemo({
   slug,
+  theme,
+  refreshKey = 0,
   fullscreen = false,
-  showOpenInNewTab = true,
-  stats,
-  onLike,
-  liking = false,
-  liked = false,
+  onThemeChange,
 }: ComponentDemoProps) {
-  const [theme, setTheme] = useState<DemoTheme>("dark")
-  const [refreshKey, setRefreshKey] = useState(0)
-
   return (
-    <div
-      className={cn(
-        "relative flex flex-1 flex-col overflow-hidden border transition-colors",
-        fullscreen
-          ? "min-h-screen rounded-none border-0"
-          : "min-h-[70vh] rounded-[32px]",
-        theme === "light"
-          ? "border-zinc-200 bg-white"
-          : "border-white/10 bg-zinc-950/60"
-      )}
-    >
-      {/* Reserved strip so absolute toolbar/stats sit above the demo (not under hero z-30) */}
-      <div className="relative z-50 h-14 shrink-0 pointer-events-none">
+    <>
+      {fullscreen && onThemeChange ? (
         <DemoToolbar
           slug={slug}
           theme={theme}
-          onThemeChange={setTheme}
-          onRefresh={() => setRefreshKey((key) => key + 1)}
-          showOpenInNewTab={showOpenInNewTab}
-          className="pointer-events-auto"
+          onThemeChange={onThemeChange}
+          showOpenInNewTab={false}
+          showRefresh={false}
+          variant="overlay"
         />
-
-        <DemoStats
-          stats={stats}
-          onLike={onLike}
-          liking={liking}
-          liked={liked}
-          className="pointer-events-auto"
-        />
-      </div>
+      ) : null}
 
       <div
-        data-theme={theme}
         className={cn(
-          "relative z-0 flex min-h-0 flex-1 flex-col overflow-auto",
-          fullscreen ? "min-h-0" : "min-h-[calc(70vh-3.5rem)]"
+          "relative isolate flex flex-1 flex-col overflow-hidden border transition-colors [transform:translateZ(0)]",
+          fullscreen
+            ? "min-h-screen rounded-none border-0"
+            : "min-h-[70vh] rounded-[32px]",
+          theme === "light"
+            ? "border-zinc-200 bg-white"
+            : "border-white/10 bg-zinc-950/60"
         )}
       >
-        <RegistryDemo slug={slug} refreshKey={refreshKey} />
+        <div
+          data-theme={theme}
+          className={cn(
+            "relative z-0 flex min-h-0 flex-1 flex-col",
+            fullscreen ? "min-h-screen" : "min-h-[70vh]"
+          )}
+        >
+          <RegistryDemo slug={slug} refreshKey={refreshKey} />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

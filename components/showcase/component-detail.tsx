@@ -9,10 +9,9 @@ import type { HighlightedCodeFile } from "@/lib/registry/highlight"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-import type { ComponentStats } from "@/lib/stats/types"
-
 import { CodeBlock } from "./code-block"
 import { ComponentDemo } from "./component-demo"
+import { DemoToolbar, type DemoTheme } from "./demo-toolbar"
 
 export interface ComponentDetailProps {
   slug: string
@@ -21,10 +20,6 @@ export interface ComponentDetailProps {
   github?: string
   dependencies: string[]
   code: Record<string, HighlightedCodeFile>
-  stats: ComponentStats
-  onLike: () => void
-  liking?: boolean
-  liked?: boolean
   onInstallCopy?: () => void
 }
 
@@ -71,10 +66,6 @@ export function ComponentDetail({
   github,
   dependencies,
   code,
-  stats,
-  onLike,
-  liking = false,
-  liked = false,
   onInstallCopy,
 }: ComponentDetailProps) {
   const installCommand = getInstallCommand(dependencies)
@@ -82,12 +73,14 @@ export function ComponentDetail({
   const codeEntries = Object.entries(code)
   const defaultCodeKey = codeEntries[0]?.[0] ?? ""
   const [activeCodeKey, setActiveCodeKey] = useState(defaultCodeKey)
+  const [demoTheme, setDemoTheme] = useState<DemoTheme>("dark")
+  const [refreshKey, setRefreshKey] = useState(0)
   const activeCode = code[activeCodeKey]
 
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="mx-auto flex min-h-screen max-w-[1600px] flex-col lg:flex-row">
-        <aside className="w-full shrink-0 border-b border-white/10 p-6 lg:w-1/4 lg:max-w-sm lg:border-b-0 lg:border-r">
+        <aside className="relative z-20 w-full shrink-0 border-b border-white/10 bg-black p-6 lg:w-1/4 lg:max-w-sm lg:border-b-0 lg:border-r">
           <Link
             href="/components"
             className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 transition hover:text-white"
@@ -204,17 +197,20 @@ export function ComponentDetail({
           ) : null}
         </aside>
 
-        <section className="flex flex-1 flex-col p-6 lg:w-3/4">
-          <p className="mb-4 text-xs font-medium uppercase tracking-wider text-white/40">
-            Live demo
-          </p>
-          <ComponentDemo
-            slug={slug}
-            stats={stats}
-            onLike={onLike}
-            liking={liking}
-            liked={liked}
-          />
+        <section className="relative z-10 flex min-w-0 flex-1 flex-col p-6 lg:w-3/4">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <p className="text-xs font-medium uppercase tracking-wider text-white/40">
+              Live demo
+            </p>
+            <DemoToolbar
+              slug={slug}
+              theme={demoTheme}
+              onThemeChange={setDemoTheme}
+              onRefresh={() => setRefreshKey((key) => key + 1)}
+              variant="inline"
+            />
+          </div>
+          <ComponentDemo slug={slug} theme={demoTheme} refreshKey={refreshKey} />
         </section>
       </div>
     </main>

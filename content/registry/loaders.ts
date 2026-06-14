@@ -11,6 +11,9 @@ export const registryLoaders: Record<
     demo: () => Promise<DemoModule>
   }
 > = {
+  "amero-hero": {
+    demo: () => import("./hero-sections/amero-hero/demo"),
+  },
   "brutal-hero": {
     demo: () => import("./hero-sections/brutal-hero/demo"),
   },

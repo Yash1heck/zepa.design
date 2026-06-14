@@ -159,7 +159,7 @@
 html.preloading,
 html.preloading body {
   overflow: hidden;
-  background: #020202;
+  background: #000000;
 }
 
 html.preloading .noise-overlay {

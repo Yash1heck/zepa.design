@@ -52,7 +52,11 @@ function DemoComponent({ slug }: { slug: string }) {
     )
   }
 
-  return <Component />
+  return (
+    <div className="demo-embed-root relative isolate min-h-full w-full overflow-hidden [transform:translateZ(0)]">
+      <Component />
+    </div>
+  )
 }
 
 export function RegistryDemo({ slug, refreshKey = 0 }: RegistryDemoProps) {

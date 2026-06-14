@@ -12,8 +12,11 @@ interface DemoToolbarProps {
   slug: string
   theme: DemoTheme
   onThemeChange: (theme: DemoTheme) => void
-  onRefresh: () => void
+  onRefresh?: () => void
   showOpenInNewTab?: boolean
+  showRefresh?: boolean
+  showTheme?: boolean
+  variant?: "inline" | "overlay"
   className?: string
 }
 
@@ -23,15 +26,21 @@ function ToolbarButton({
   label,
   href,
   target,
+  variant,
 }: {
   children: ReactNode
   onClick?: () => void
   label: string
   href?: string
   target?: string
+  variant: "inline" | "overlay"
 }) {
-  const className =
-    "flex size-8 items-center justify-center rounded-md text-white/80 transition hover:bg-white/10 hover:text-white"
+  const className = cn(
+    "flex size-8 items-center justify-center rounded-md transition",
+    variant === "inline"
+      ? "text-white/45 hover:bg-white/10 hover:text-white"
+      : "text-white hover:bg-white/10"
+  )
 
   if (href) {
     return (
@@ -67,17 +76,39 @@ export function DemoToolbar({
   onThemeChange,
   onRefresh,
   showOpenInNewTab = true,
+  showRefresh = true,
+  showTheme = true,
+  variant = "inline",
   className,
 }: DemoToolbarProps) {
-  return (
-    <div
-      className={cn(
-        "absolute left-3 top-3 z-50 flex items-center gap-0.5 rounded-lg border border-white/10 bg-black p-1 shadow-lg",
-        className
-      )}
+  const themeButton = showTheme ? (
+    <ToolbarButton
+      variant={variant}
+      label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+      onClick={() => onThemeChange(theme === "dark" ? "light" : "dark")}
     >
+      {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+    </ToolbarButton>
+  ) : null
+
+  if (variant === "overlay") {
+    return (
+      <div
+        className={cn(
+          "fixed right-4 top-4 z-[100] rounded-lg border border-white/10 bg-black p-1 shadow-lg",
+          className
+        )}
+      >
+        {themeButton}
+      </div>
+    )
+  }
+
+  return (
+    <div className={cn("flex items-center gap-1", className)}>
       {showOpenInNewTab ? (
         <ToolbarButton
+          variant="inline"
           href={`/components/${slug}/preview`}
           target="_blank"
           label="Open in new tab"
@@ -86,22 +117,13 @@ export function DemoToolbar({
         </ToolbarButton>
       ) : null}
 
-      <ToolbarButton
-        label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-        onClick={() =>
-          onThemeChange(theme === "dark" ? "light" : "dark")
-        }
-      >
-        {theme === "dark" ? (
-          <Sun className="size-4" />
-        ) : (
-          <Moon className="size-4" />
-        )}
-      </ToolbarButton>
+      {themeButton}
 
-      <ToolbarButton label="Refresh demo" onClick={onRefresh}>
-        <RotateCw className="size-4" />
-      </ToolbarButton>
+      {showRefresh && onRefresh ? (
+        <ToolbarButton variant="inline" label="Refresh demo" onClick={onRefresh}>
+          <RotateCw className="size-4" />
+        </ToolbarButton>
+      ) : null}
     </div>
   )
 }

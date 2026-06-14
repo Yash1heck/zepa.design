@@ -1,125 +1,191 @@
 import {
   BookOpen,
-  Layers,
+  CheckCircle,
   FileText,
+  FolderTree,
   Hash,
+  Layers,
+  Play,
+  Terminal,
   Video,
   Zap,
-  Cpu,
-  CheckCircle,
-  GitBranch,
-  Terminal,
   AlertTriangle,
 } from "lucide-react"
 import { Navbar } from "@/components/landing/navbar"
 import { Footer } from "@/components/landing/footer"
-import {
-  ContributorBuildFlow,
-  ContributorGeneratedFlow,
-  ContributorMainFlow,
-} from "@/components/docs/contributor-flow"
+
+const QUICK_CHECKLIST = [
+  "Added meta.ts",
+  "Added demo.tsx",
+  "Added ui/ folder (if the component has local UI files)",
+  "Added preview at public/previews/{category}/{slug}/preview.mov (compressed to under 5MB)",
+  "Ran npm run build:registry",
+  "Ran npm run lint",
+  "Ran npm run test",
+  "Responsive on mobile and desktop",
+  "No console.log",
+  "No hardcoded secrets or API keys",
+  "No unnecessary dependencies",
+  "Tested on localhost/components before pushing",
+] as const
+
+const EXAMPLE_STEPS = [
+  {
+    step: "1",
+    title: "Create the component folder",
+    body: (
+      <>
+        Create a folder under{" "}
+        <code className="text-zinc-300">content/registry/hero-sections/sameer-hero</code>
+      </>
+    ),
+  },
+  {
+    step: "2",
+    title: "Add your source files",
+    body: (
+      <ul className="mt-2 space-y-2">
+        <li>
+          • <code className="text-zinc-300">meta.ts</code> in the{" "}
+          <code className="text-zinc-300">sameer-hero</code> folder
+        </li>
+        <li>
+          • <code className="text-zinc-300">demo.tsx</code> in the same folder
+        </li>
+        <li>
+          • <code className="text-zinc-300">ui/</code> — add any local UI files inside{" "}
+          <code className="text-zinc-300">sameer-hero/ui/</code>
+        </li>
+      </ul>
+    ),
+  },
+  {
+    step: "3",
+    title: "Add the gallery preview video",
+    body: (
+      <>
+        Add{" "}
+        <code className="text-zinc-300">
+          public/previews/hero-sections/sameer-hero/preview.mov
+        </code>
+      </>
+    ),
+  },
+  {
+    step: "4",
+    title: "Build the registry",
+    body: (
+      <>
+        Run <code className="text-zinc-300">npm run build:registry</code>
+      </>
+    ),
+  },
+  {
+    step: "5",
+    title: "Verify it appears",
+    body: (
+      <>
+        Open <code className="text-zinc-300">/components</code> and confirm your card
+        shows up
+      </>
+    ),
+  },
+  {
+    step: "6",
+    title: "Test locally before pushing",
+    body: (
+      <>
+        Check <code className="text-zinc-300">localhost:3000/components/sameer-hero</code>{" "}
+        — live demo, install command, and code tabs should all work
+      </>
+    ),
+  },
+] as const
 
 export default function DocsPage() {
   return (
     <main className="min-h-screen bg-black px-6 py-24 text-white">
       <Navbar />
       <div className="mx-auto max-w-5xl">
-        <div className="mb-10 flex items-start justify-between gap-6">
-          <div className="flex-1">
-            <p className="mb-3 text-sm text-zinc-500">Contributing Guide</p>
-            <h1 className="text-4xl font-semibold tracking-tight">
-              How to add a component
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-              Only edit <code className="text-zinc-300">meta.ts</code> and your component
-              source files. Run the registry build — the system generates everything
-              else automatically.
-            </p>
-          </div>
-
-          <div className="hidden flex-col gap-3 sm:flex">
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-sm text-zinc-300">
-              <CheckCircle className="h-4 w-4 text-emerald-400" /> meta.ts only
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-sm text-zinc-300">
-              <Video className="h-4 w-4 text-amber-400" /> Preview required
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-sm text-zinc-300">
-              <Terminal className="h-4 w-4 text-violet-400" /> build:registry
-            </div>
-          </div>
+        <div className="mb-12">
+          <p className="mb-3 text-sm text-zinc-500">Contributing</p>
+          <h1 className="text-4xl font-semibold tracking-tight">Add a component</h1>
+          <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+            Contributing is simple: add your folder, run one command, verify on{" "}
+            <code className="text-zinc-300">/components</code>. Everything else on this
+            page is reference.
+          </p>
         </div>
 
         <div className="space-y-12">
-          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <GitBranch className="h-5 w-5 text-cyan-400" />
-              Contributor flow
+          {/* Primary: quick checklist + example */}
+          <section className="rounded-2xl border border-emerald-500/30 bg-zinc-950 p-8 md:p-10">
+            <h2 className="mb-2 flex items-center gap-2 text-3xl font-semibold">
+              <CheckCircle className="h-7 w-7 text-emerald-400" />
+              Quick checklist
             </h2>
-            <p className="mb-6 text-zinc-400 leading-7">
-              Follow this path from a new folder to a live gallery card, detail page,
-              and shadcn install URL.
+            <p className="mb-8 text-zinc-400">
+              Run through this before you open a PR. This is the only flow you need to
+              remember.
             </p>
-            <ContributorMainFlow />
+
+            <div className="grid gap-8 lg:grid-cols-2">
+              <ul className="space-y-4">
+                {QUICK_CHECKLIST.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-base text-zinc-200"
+                  >
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+                <h3 className="mb-6 flex items-center gap-2 text-xl font-medium">
+                  <FolderTree className="h-5 w-5 text-cyan-400" />
+                  Example: sameer-hero
+                </h3>
+                <ol className="space-y-6">
+                  {EXAMPLE_STEPS.map((item) => (
+                    <li key={item.step} className="flex gap-4">
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-zinc-700 bg-zinc-950 text-sm font-medium text-emerald-400">
+                        {item.step}
+                      </span>
+                      <div>
+                        <p className="font-medium text-white">{item.title}</p>
+                        <div className="mt-1 text-sm leading-7 text-zinc-400">
+                          {item.body}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
           </section>
 
-          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <Layers className="h-5 w-5 text-violet-400" />
-              What you edit vs what is generated
-            </h2>
-            <p className="mb-6 text-zinc-400 leading-7">
-              At 10, 100, or 1000 components the process stays the same — one{" "}
-              <code className="text-zinc-300">meta.ts</code> per folder, then{" "}
-              <code className="text-zinc-300">npm run build:registry</code>.
-            </p>
-            <ContributorGeneratedFlow />
-          </section>
-
-          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <Terminal className="h-5 w-5 text-violet-400" />
-              Build → deploy → shadcn URL
-            </h2>
-            <p className="mb-6 text-zinc-400 leading-7">
-              The install URL does not come from <code className="text-zinc-300">meta.ts</code>{" "}
-              alone. The build script must generate{" "}
-              <code className="text-zinc-300">public/r/[slug].json</code> and deploy it.
-            </p>
-            <ContributorBuildFlow />
-          </section>
-
+          {/* Reference sections — same visual style as before */}
           <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
             <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
               <FileText className="h-5 w-5 text-emerald-400" />
-              Required folder structure
+              Folder structure
             </h2>
             <div className="overflow-x-auto">
               <pre className="text-sm leading-7 text-zinc-300">{`content/registry/
 └ hero-sections/
-  └ my-new-hero/              ← slug (folder name = meta.slug)
-    ├ meta.ts                 ← YOU EDIT (single source of truth)
-    ├ demo.tsx                ← YOU EDIT (live preview wrapper)
+  └ sameer-hero/
+    ├ meta.ts
+    ├ demo.tsx
     └ ui/
-      └ my-new-hero.tsx       ← YOU EDIT (component source)
+      └ (optional local components)
 
 public/previews/
 └ hero-sections/
-  └ my-new-hero/
-    └ preview.mov             ← gallery video card`}</pre>
+  └ sameer-hero/
+    └ preview.mov`}</pre>
             </div>
-          </section>
-
-          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <BookOpen className="h-5 w-5 text-emerald-400" />
-              Principles
-            </h2>
-            <p className="text-zinc-400 leading-7">
-              Keep local UI inside the component folder. Every entry should be isolated,
-              portable, and self-contained. Gallery uses lightweight video previews;
-              the full React demo runs only on the detail page.
-            </p>
           </section>
 
           <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
@@ -130,8 +196,8 @@ public/previews/
             <ul className="space-y-3 text-zinc-400 leading-7">
               <li className="flex items-start gap-3">
                 <Zap className="mt-1 h-4 w-4 shrink-0 text-amber-400" />
-                Use lowercase kebab-case only (e.g.{" "}
-                <code className="text-zinc-300">glsl-hills-hero</code>).
+                Use lowercase kebab-case (e.g.{" "}
+                <code className="text-zinc-300">sameer-hero</code>).
               </li>
               <li className="flex items-start gap-3">
                 <FileText className="mt-1 h-4 w-4 shrink-0 text-emerald-400" />
@@ -139,14 +205,10 @@ public/previews/
                 name exactly.
               </li>
               <li className="flex items-start gap-3">
-                <Cpu className="mt-1 h-4 w-4 shrink-0 text-violet-400" />
-                Routes use the slug:{" "}
-                <code className="text-zinc-300">/components/[slug]</code> and{" "}
-                <code className="text-zinc-300">/r/[slug].json</code>.
-              </li>
-              <li className="flex items-start gap-3">
                 <Layers className="mt-1 h-4 w-4 shrink-0 text-violet-400" />
-                Keep all UI files inside the component folder — no global copies.
+                Category today is{" "}
+                <code className="text-zinc-300">hero-sections</code> — more categories
+                will appear in the sidebar as they are added.
               </li>
             </ul>
           </section>
@@ -154,37 +216,20 @@ public/previews/
           <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
             <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
               <Video className="h-5 w-5 text-amber-400" />
-              Preview rules
+              Preview video
             </h2>
-            <p className="text-zinc-300 leading-7">
-              Every component must include a gallery preview video:
+            <p className="text-zinc-400 leading-7">
+              Every component needs a lightweight{" "}
+              <code className="text-zinc-300">preview.mov</code> (or .mp4). The gallery
+              at <code className="text-zinc-300">/components</code> plays it on hover —
+              no live WebGL in the grid. Full demo runs on the detail page. Keep the
+              video under <code className="text-zinc-300">5MB</code> — compress with{" "}
+              <code className="text-zinc-300">
+                ffmpeg -i preview.mov -vf scale=1280:-2 -r 30 -c:v libx264 -crf 23
+                -preset fast -movflags +faststart -an preview.mov
+              </code>{" "}
+              before committing.
             </p>
-            <ul className="mt-4 space-y-2 text-zinc-400">
-              <li>
-                • Path in meta:{" "}
-                <code className="text-zinc-300">
-                  /previews/&#123;category&#125;/&#123;slug&#125;/preview.mov
-                </code>
-              </li>
-              <li>• Use optimized, lightweight .mov or .mp4 files</li>
-              <li>• Cards without a preview are hidden from the gallery grid</li>
-            </ul>
-            <p className="mt-4 text-red-400">
-              Pull requests without previews will be rejected.
-            </p>
-          </section>
-
-          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <Zap className="h-5 w-5 text-amber-400" />
-              Performance rules
-            </h2>
-            <ul className="space-y-3 text-zinc-400 leading-7">
-              <li>• Gallery grid shows video previews only — not live WebGL or heavy runtimes.</li>
-              <li>• Full live rendering happens on the component detail page.</li>
-              <li>• Use <code className="text-zinc-300">&quot;use client&quot;</code> on demos that use hooks, Three.js, or browser APIs.</li>
-              <li>• Use dynamic imports inside demos when bundles are large.</li>
-            </ul>
           </section>
 
           <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
@@ -194,55 +239,18 @@ public/previews/
             </h2>
             <div className="overflow-x-auto">
               <pre className="text-sm leading-7 text-zinc-300">{`export const meta = {
-  slug: "glsl-hills-hero",
-
-  title: "GLSL Hills Hero",
-
-  description:
-    "Animated GLSL hills hero section powered by Three.js shaders.",
-
+  slug: "sameer-hero",
+  title: "Sameer Hero",
+  description: "Your one-line description for the gallery and detail page.",
   category: "hero-sections",
-
-  preview:
-    "/previews/hero-sections/glsl-hills-hero/preview.mov",
-
-  github: "vij-sameerb5",
-
-  tags: [
-    "hero",
-    "glsl",
-    "threejs",
-    "shader",
-    "animated",
-  ],
-
-  dependencies: ["three"],
-
+  preview: "/previews/hero-sections/sameer-hero/preview.mov",
+  github: "your-github-username",
+  tags: ["hero", "motion"],
+  dependencies: ["framer-motion"],
   registryDependencies: [],
-
   version: 1,
 } as const`}</pre>
             </div>
-          </section>
-
-          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <AlertTriangle className="h-5 w-5 text-amber-400" />
-              Common mistakes
-            </h2>
-            <ul className="space-y-3 text-zinc-400 leading-7">
-              <li>
-                • <code className="text-zinc-300">meta.slug</code> does not match folder
-                name → build fails or wrong route.
-              </li>
-              <li>• Missing <code className="text-zinc-300">demo.tsx</code> → “Demo not found” on detail page.</li>
-              <li>• Missing preview video → card does not appear in gallery.</li>
-              <li>
-                • Forgetting <code className="text-zinc-300">npm run build:registry</code>{" "}
-                → site still shows old registry.
-              </li>
-              <li>• Editing generated files by hand → overwritten on next build.</li>
-            </ul>
           </section>
 
           <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
@@ -259,63 +267,84 @@ public/previews/
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
                 <p className="mb-2 text-xs uppercase tracking-wider text-zinc-500">
-                  Local development
+                  Local dev
                 </p>
                 <pre className="text-sm text-zinc-300">npm run dev</pre>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
                 <p className="mb-2 text-xs uppercase tracking-wider text-zinc-500">
-                  Production build (runs registry build first)
+                  Lint & test
                 </p>
-                <pre className="text-sm text-zinc-300">npm run build</pre>
+                <pre className="text-sm text-zinc-300">{`npm run lint
+npm run test`}</pre>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
                 <p className="mb-2 text-xs uppercase tracking-wider text-zinc-500">
-                  shadcn CLI (after deploy)
+                  Playground (optional)
                 </p>
-                <pre className="text-sm text-zinc-300">{`npx shadcn@latest add https://zepadesign.netlify.app/r/glsl-hills-hero.json`}</pre>
+                <pre className="text-sm text-zinc-300">{`/playground/hero?slug=sameer-hero`}</pre>
               </div>
             </div>
           </section>
 
           <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
             <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
-              <CheckCircle className="h-5 w-5 text-emerald-400" />
-              Quick checklist
+              <BookOpen className="h-5 w-5 text-emerald-400" />
+              What gets generated for you
+            </h2>
+            <p className="mb-4 text-zinc-400 leading-7">
+              Never edit these by hand —{" "}
+              <code className="text-zinc-300">npm run build:registry</code> overwrites them:
+            </p>
+            <ul className="space-y-2 font-mono text-xs text-zinc-300">
+              <li>content/registry/items.ts</li>
+              <li>content/registry/loaders.ts</li>
+              <li>content/registry/registry.json</li>
+              <li>public/r/&#123;slug&#125;.json</li>
+            </ul>
+          </section>
+
+          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
+            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
+              <AlertTriangle className="h-5 w-5 text-amber-400" />
+              Common mistakes
             </h2>
             <ul className="space-y-3 text-zinc-400 leading-7">
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-400">1.</span>
-                Create folder under <code className="text-zinc-300">content/registry/</code>
+              <li>
+                • <code className="text-zinc-300">meta.slug</code> does not match folder
+                name
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-400">2.</span>
-                Add <code className="text-zinc-300">meta.ts</code>,{" "}
-                <code className="text-zinc-300">demo.tsx</code>,{" "}
-                <code className="text-zinc-300">ui/</code>
+              <li>
+                • Missing <code className="text-zinc-300">demo.tsx</code> → demo not found
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-400">3.</span>
-                Add <code className="text-zinc-300">public/previews/.../preview.mov</code>
+              <li>
+                • Missing preview → card hidden from{" "}
+                <code className="text-zinc-300">/components</code>
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-400">4.</span>
-                Run <code className="text-zinc-300">npm run build:registry</code>
+              <li>
+                • Skipping <code className="text-zinc-300">npm run build:registry</code>{" "}
+                before pushing
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-emerald-400">5.</span>
-                Verify <code className="text-zinc-300">/components</code> and{" "}
-                <code className="text-zinc-300">/components/[slug]</code>
+              <li>
+                • Using <code className="text-zinc-300">position: fixed</code> in demos —
+                breaks the split layout on the detail page (use{" "}
+                <code className="text-zinc-300">absolute</code> inside a relative root)
               </li>
             </ul>
           </section>
 
-          <section className="pt-6">
-            <h2 className="text-2xl font-medium">Ready to submit</h2>
-            <p className="mt-4 max-w-2xl leading-8 text-zinc-400">
-              Follow this flow for clean registry entries, working shadcn install URLs,
-              and a gallery that scales as Zepa grows.
+          <section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
+            <h2 className="mb-3 flex items-center gap-2 text-2xl font-medium">
+              <Play className="h-5 w-5 text-amber-400" />
+              After deploy
+            </h2>
+            <p className="text-zinc-400 leading-7">
+              Users can install via shadcn once{" "}
+              <code className="text-zinc-300">public/r/your-slug.json</code> is deployed:
             </p>
+            <pre className="mt-4 overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-sm text-zinc-300">
+              npx shadcn@latest add https://zepadesign.netlify.app/r/sameer-hero.json
+            </pre>
           </section>
         </div>
       </div>

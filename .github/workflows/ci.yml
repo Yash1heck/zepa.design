@@ -39,3 +39,24 @@ jobs:
 
       - name: Build registry
         run: npm run build:registry
+
+      - name: Security check - unsafe patterns in registry components
+        run: |
+          if grep -rnE "dangerouslySetInnerHTML|eval\(|new Function\(|document\.write|<script" content/registry; then
+            echo "::error::Unsafe pattern found in content/registry. dangerouslySetInnerHTML, eval, new Function, document.write, and inline <script> tags are not allowed in registry components."
+            exit 1
+          fi
+
+      - name: Security check - no network calls in registry components
+        run: |
+          if grep -rnE "fetch\(|XMLHttpRequest|axios|navigator\.sendBeacon|new WebSocket" content/registry; then
+            echo "::error::Network call found in content/registry. Components/demos must not make network requests (fetch/XHR/axios/WebSocket/sendBeacon)."
+            exit 1
+          fi
+
+      - name: Security check - no local image assets in registry components
+        run: |
+          if find content/registry -path "*/ui/assets/*" | grep -q .; then
+            echo "::error::content/registry contains a ui/assets folder. Use hosted image URLs (Cloudinary) instead of committing local image assets."
+            exit 1
+          fi

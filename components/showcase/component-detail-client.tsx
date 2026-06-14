@@ -1,15 +1,12 @@
 "use client"
 
-import type { ComponentStats } from "@/lib/stats/types"
 import { useComponentStats } from "@/hooks/use-component-stats"
 
 import { ComponentDetail } from "./component-detail"
 import type { ComponentDetailProps } from "./component-detail"
+import type { ComponentStats } from "@/lib/stats/types"
 
-type ComponentDetailClientProps = Omit<
-  ComponentDetailProps,
-  "stats" | "onLike" | "liking" | "liked" | "onInstallCopy"
-> & {
+type ComponentDetailClientProps = Omit<ComponentDetailProps, "onInstallCopy"> & {
   initialStats: ComponentStats
 }
 
@@ -18,19 +15,13 @@ export function ComponentDetailClient({
   initialStats,
   ...props
 }: ComponentDetailClientProps) {
-  const { stats, liking, liked, like, recordInstall } = useComponentStats(
-    slug,
-    initialStats,
-    { trackViewOnReload: true }
-  )
+  const { recordInstall } = useComponentStats(slug, initialStats, {
+    trackViewOnReload: true,
+  })
 
   return (
     <ComponentDetail
       slug={slug}
-      stats={stats}
-      onLike={like}
-      liking={liking}
-      liked={liked}
       onInstallCopy={recordInstall}
       {...props}
     />

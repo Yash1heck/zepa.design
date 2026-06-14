@@ -36,6 +36,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# private dev journal (local only — not for git)
+dev-journal.md
+
 # vercel
 .vercel
 

@@ -133,7 +133,7 @@ function MainframeHero() {
         playsInline
         preload="auto"
         style={{
-          position: 'fixed',
+          position: 'absolute',
           inset: 0,
           zIndex: 0,
           width: '100%',
@@ -148,7 +148,7 @@ function MainframeHero() {
       {/* Mobile overlay menu */}
       <div
         style={{
-          position: 'fixed',
+          position: 'absolute',
           inset: 0,
           zIndex: 9,
           background: 'rgba(255,255,255,0.95)',
@@ -197,7 +197,7 @@ function MainframeHero() {
 
       {/* Navbar */}
       <nav
-        style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 10 }}
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10 }}
         className="flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5"
       >
         {/* Logo */}
@@ -303,7 +303,7 @@ function MainframeHero() {
         style={{
           position: 'relative',
           zIndex: 1,
-          height: '100vh',
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
@@ -445,7 +445,7 @@ function MainframeHero() {
       {/* Copy toast */}
       <div
         style={{
-          position: 'fixed',
+          position: 'absolute',
           bottom: '2rem',
           left: '50%',
           transform: 'translateX(-50%)',

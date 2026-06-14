@@ -60,7 +60,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
             duration: 1.4,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#020202]"
+          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-black"
         >
           <motion.video
             autoPlay
@@ -82,7 +82,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
             }}
             className="relative z-10 w-[320px] object-contain md:w-[420px]"
           >
-            <source src="/ss.mp4" type="video/mp4" />
+            <source src="/news.mp4" type="video/mp4" />
           </motion.video>
         </motion.div>
       )}

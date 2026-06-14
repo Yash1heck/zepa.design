@@ -4,6 +4,22 @@
   "homepage": "https://zepadesign.netlify.app",
   "items": [
     {
+      "slug": "amero-hero",
+      "title": "Amero Hero",
+      "category": "hero-sections",
+      "description": "AI design-reference finder hero with animated pixel-grid backgrounds, typewriter prompt, folder stack reveal, and floating reference cards.",
+      "github": "vij-sameerb5",
+      "tags": [
+        "hero",
+        "ai",
+        "animation",
+        "typewriter",
+        "interactive",
+        "landing"
+      ],
+      "installUrl": "https://zepadesign.netlify.app/r/amero-hero.json"
+    },
+    {
       "slug": "brutal-hero",
       "title": "Brutal Hero",
       "category": "hero-sections",
