@@ -1,39 +1,45 @@
-<img width="1647" height="990" alt="Screenshot 2026-05-27 at 2 32 47 AM" src="https://github.com/user-attachments/assets/ab341916-bd15-4658-969d-854c76ea65e5" />
+# Zepa UI
 
+**Live site:** [zepa.design](https://zepa.design)
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Introducing Zepa
 
-## Getting Started
+A growing collection of **curated** UI components, motion systems, and immersive web experiences for React & Next.js — not a dump of random blocks. Every piece is chosen and refined for real landing pages and product sites.
 
-First, run the development server:
+Built for developers who care about details.
+
+- Copy & paste components
+- Motion-first interactions
+- Modern design patterns
+- Free & open source
+
+Shipping new components every day.
+
+<p align="center">
+  <img src="public/read2.png" alt="Zepa UI landing page" width="100%" />
+</p>
+
+<p align="center">
+  <img src="public/read3.png" alt="Zepa UI component gallery" width="100%" />
+</p>
+
+## Install a component
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx shadcn@latest add https://zepa.design/r/amero-hero.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Browse all components at [zepa.design/components](https://zepa.design/components).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Getting started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) or [zepa.design/docs](https://zepa.design/docs) for the full contributor guide.

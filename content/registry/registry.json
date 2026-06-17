@@ -164,6 +164,23 @@
       "installUrl": "https://zepa.design/r/posterscroll-hero.json"
     },
     {
+      "slug": "slider-hero",
+      "title": "Slider Hero",
+      "category": "hero-sections",
+      "description": "Scroll-driven hero with cinematic card intro, fixed viewport card morph on scroll, hover name tags with breathe zoom, and two-section marketplace layout. Converted from Pallet Ross.",
+      "github": "vij-sameerb5",
+      "tags": [
+        "hero",
+        "slider",
+        "scroll",
+        "animation",
+        "landing",
+        "gallery",
+        "motion"
+      ],
+      "installUrl": "https://zepa.design/r/slider-hero.json"
+    },
+    {
       "slug": "vault-hero",
       "title": "Vault Hero",
       "category": "hero-sections",
