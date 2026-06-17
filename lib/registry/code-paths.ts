@@ -48,6 +48,9 @@ export const codePaths: Record<string, string[]> = {
     "hero-sections/posterscroll-hero/ui/tmdb-api-key.ts",
     "hero-sections/posterscroll-hero/ui/usePeacockScene.ts",
   ],
+  "slider-hero": [
+    "hero-sections/slider-hero/demo.tsx",
+  ],
   "vault-hero": [
     "hero-sections/vault-hero/demo.tsx",
   ],

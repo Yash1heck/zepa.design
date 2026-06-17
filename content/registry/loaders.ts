@@ -41,6 +41,9 @@ export const registryLoaders: Record<
   "posterscroll-hero": {
     demo: () => import("./hero-sections/posterscroll-hero/demo"),
   },
+  "slider-hero": {
+    demo: () => import("./hero-sections/slider-hero/demo"),
+  },
   "vault-hero": {
     demo: () => import("./hero-sections/vault-hero/demo"),
   },

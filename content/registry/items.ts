@@ -11,6 +11,7 @@ import { meta as heroSectionsGlslHillsHero } from "./hero-sections/glsl-hills-he
 import { meta as heroSectionsMainframeHero } from "./hero-sections/mainframe-hero/meta"
 import { meta as heroSectionsNewHero } from "./hero-sections/new-hero/meta"
 import { meta as heroSectionsPosterscrollHero } from "./hero-sections/posterscroll-hero/meta"
+import { meta as heroSectionsSliderHero } from "./hero-sections/slider-hero/meta"
 import { meta as heroSectionsVaultHero } from "./hero-sections/vault-hero/meta"
 import { meta as heroSectionsVercelHero } from "./hero-sections/vercel-hero/meta"
 
@@ -25,6 +26,7 @@ export const registryItems = [
   heroSectionsMainframeHero,
   heroSectionsNewHero,
   heroSectionsPosterscrollHero,
+  heroSectionsSliderHero,
   heroSectionsVaultHero,
   heroSectionsVercelHero,
 ] as const
